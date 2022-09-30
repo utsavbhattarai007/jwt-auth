@@ -1,15 +1,16 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is the server for the project",
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "start":"node index.js",
     "server": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "colors": "^1.4.0",
     "cors": "^2.8.5",
