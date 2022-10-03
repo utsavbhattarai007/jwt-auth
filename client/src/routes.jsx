@@ -1,7 +1,7 @@
 import { useRoutes } from "react-router-dom";
 
 //Layouts
-import NavOnly from "./layout/NavOnly";
+import NavWithFooter from "./layout/NavWithFooter";
 
 //Pages
 import Auth from "./pages/Auth";
@@ -16,9 +16,9 @@ export default function Router() {
     },
     {
       path: "/app",
-      element: <NavOnly />,
+      element: <NavWithFooter />,
       children: [{ path: "", element: <Home /> }],
     },
-    { path: "*", element: <NotFound/> },
+    { path: "*", element: <NotFound /> },
   ]);
 }

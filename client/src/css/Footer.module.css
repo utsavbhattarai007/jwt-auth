@@ -1,0 +1,24 @@
+.footer_con{
+    height: 4.5rem;
+    display: flex;
+    background-color: var(--nav-bg);
+    align-items: center;
+    justify-content: center;
+    padding: 0 1.5rem;
+}
+.footer_con p{
+    color: var(--white);
+    font-family: "Poppins", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-decoration: none;
+}   
+.footer_con p a{
+    color: var(--white);
+    transition: 0.3s;
+}
+.footer_con p a:hover{
+    color: var(--home-bg);
+    text-decoration: underline;
+}

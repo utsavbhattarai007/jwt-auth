@@ -1,14 +1,16 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
-const NavOnly = () => {
+const NavWithFooter = () => {
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <Outlet />
+      <Footer />
     </>
   );
 };
 
-export default NavOnly;
+export default NavWithFooter;

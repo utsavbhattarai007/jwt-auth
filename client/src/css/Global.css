@@ -9,6 +9,9 @@
     --primary:#1fbcb4;
     --white:#fff;
     --border: rgba(128, 128, 128, 0.308);
+    --nav-bg: #2C3333;
+    --home-bg:#CDF0EA;
+    --gray:rgba(114, 114, 114, 0.593);
 }
 body {
   font-family: "Poppins", sans-serif !important;
