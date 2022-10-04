@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../css/Form.module.css";
+import { useNavigate } from "react-router-dom";
 import {
   FiMail,
   FiLock,
@@ -8,21 +9,26 @@ import {
   FiUser,
   FiUpload,
 } from "react-icons/fi";
+import axios from "../../config/axios.js";
 const Form = () => {
   const [eye, isEye] = useState(false);
   const [auth, isAuth] = useState("login");
   const [pic, setPic] = useState("");
-  const [data,setData] = useState({
-    username:"",
-    email:"",
-    password:"",
-  })
+  const [err, setErr] = useState("");
+  const [msg, setMsg] = useState("");
+  const [data, setData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const navigate = useNavigate();
+
   const swap = () => {
     setData({
       username: "",
       email: "",
       password: "",
-      createPassword:"",
+      createPassword: "",
     });
     isAuth(auth === "login" ? "register" : "login");
   };
@@ -35,22 +41,112 @@ const Form = () => {
     //handling all changes in one state
     setData({
       ...data,
-      [e.target.name]:e.target.value.trim() //Removing white spaces
-    })
-  }
-  
-  console.log(data);
-  console.log(pic);
-  
-  const onSubmit = (e) => {
+      [e.target.name]: e.target.value.trim(), //Removing white spaces
+    });
+  };
+
+  const header = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  //Resetting err and msg state while inputing
+  useEffect(() => {
+    //change error and message state to empty string while inputing
+    setErr("");
+    setMsg("");
+  }, [data]);
+
+  //Auth submit
+  const onSubmit = async (e) => {
+    setMsg("");
+    setErr("");
     e.preventDefault();
     //Sending data to database
-  }
+    {
+      auth === "login" ? login() : register();
+    }
+  };
+
+  //login
+  const login = async () => {
+    try {
+      const res = await axios.post(
+        "/login",
+        {
+          email: data.email,
+          password: data.password,
+        },
+        header
+      );
+      if (res) {
+        setMsg(res.data.msg);
+        //Token login pending
+        navigate("/app");
+      }
+    } catch (error) {
+      setErr(error.response.data.msg);
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
+        setErr(error.response.data.msg);
+      }
+    }
+  };
+
+  //Upload image and get img url
+  // const getImgUrl = async () => {
+  //   alert("Check console");
+  //   const data = new FormData();
+  //   data.append("profile", pic, pic.name);
+  //   let img = data;
+  //   const res = await axios.post("/upload", img, {
+  //     headers: {
+  //       "Content-Type": "multipart/form-data",  
+  //     },
+  //   });
+  //   console.log(res);
+
+
+  // };
+
+  //Register
+  const register = async () => {
+    //registering user
+    try {
+      const res = await axios.post(
+        "/signup",
+        {
+          username: data.username,
+          email: data.email,
+          password: data.password,
+          profilePic: "empty",
+        },
+        header
+      );
+      if (res) {
+        setMsg(res.data.msg);
+        // navigate("/");
+      }
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
+        setErr(error.response.data.msg);
+      }
+    }
+  };
+
   return (
     <>
       <div className={styles.form_container}>
         <div className={styles.form_wrapper}>
-          <div className={styles.header}>
+          <div className={styles.header} onClick={() => getImgUrl()}>
             <p>{auth === "login" ? "Login" : "Register"}</p>
           </div>
           <form onSubmit={onSubmit}>
@@ -86,6 +182,16 @@ const Form = () => {
                     />
                   )}
                 </div>
+                {err && (
+                  <p className={styles.err_con}>
+                    <label className={styles.msg1}>{err}</label>
+                  </p>
+                )}
+                {msg && (
+                  <p className={styles.msg_con}>
+                    <label className={styles.msg2}>{msg}</label>
+                  </p>
+                )}
                 <span>Forget Password?</span>
               </>
             ) : (
@@ -152,6 +258,16 @@ const Form = () => {
                     />
                   )}
                 </div>
+                {err && (
+                  <p className={styles.err_con}>
+                    <label className={styles.msg1}>{err}</label>
+                  </p>
+                )}
+                {msg && (
+                  <p className={styles.msg_con}>
+                    <label className={styles.msg2}>{msg}</label>
+                  </p>
+                )}
               </>
             )}
             <button type="submit" className={styles.login_btn}>

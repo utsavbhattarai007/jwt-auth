@@ -31,7 +31,7 @@ router.post("/signup", async (req, res) => {
 
     //Replacing original password with hashed password
     await new User({ ...req.body, password: hashPassword }).save();
-    res.status(201).json({ error: false, msg: "User created successfully" });
+    res.status(200).json({ error: false, msg: "User created successfully" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: true, msg: "Internal server error" });
@@ -47,7 +47,7 @@ router.post("/login", async (req, res) => {
     if (error) {
       return res
         .status(400)
-        .json({ error: true, msg: error.details[0].message });
+        .send({ error: true, msg: error.details[0].message });
     }
 
     //Check whether the user's email exist in the database

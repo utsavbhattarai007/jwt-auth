@@ -120,8 +120,8 @@ input::placeholder {
 .pic_upload {
   background-color: var(--light-primary);
   color: white;
-  width:100px;
-  height:100px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   font-family: "Poppins", sans-serif;
   font-style: normal;
@@ -131,12 +131,36 @@ input::placeholder {
   overflow: hidden;
   border: none;
 }
-.pic_upload .uploadbtn{
+.pic_upload .uploadbtn {
   font-size: 30px;
   cursor: pointer;
 }
-.pic{
+.pic {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.err_con {
+  border-radius: 4px;
+  padding: 8px;
+  background-color: #ffcccb;
+  text-align: center;
+}
+.err_con .msg1 {
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  color: rgba(239, 39, 39, 0.74);
+  font-family: 600;
+}
+.msg_con {
+  border-radius: 4px;
+  padding: 8px;
+  background-color: #98fb98;
+  text-align: center;
+}
+.msg_con .msg2 {
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  color: #50C878;
+  font-family: 600;
 }
