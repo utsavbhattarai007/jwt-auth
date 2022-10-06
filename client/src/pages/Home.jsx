@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "../css/Home.module.css";
+import { ContextProvider } from "../config/Context";
 const Home = () => {
+  const {usr} = useContext(ContextProvider);
+  const [user,setUser] = usr;
+  const token = localStorage.getItem("access");
+  if(!token)
+  {
+    window.location.href = "/?auth";
+  }
   return (
     <>
       <div className={styles.home_con}>
@@ -10,11 +18,11 @@ const Home = () => {
           </div>
           <div className={styles.content}>
             <div className={styles.img_wrapper}>
-              <img src="/pic.png" />
+              <img src={user?.profilePic} />
             </div>
             <div className={styles.des}>
-              <p>Utsav Bhattarai</p>
-              <p>utsavbhattarai007@gmail.com</p>
+              <p>{user?.username}</p>
+              <p>{user?.email}</p>
             </div>
             <div className={styles.btn_con}>
               <button className={styles.btn}>Edit Profile</button>

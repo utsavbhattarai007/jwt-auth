@@ -4,7 +4,7 @@ import {} from "dotenv/config";
 import colors from "colors";
 import {connectDB} from "./conn.js";
 import authRoutes from "./routes/_auth.js";
-import refreshTokenRoutes from "./routes/_refreshToken.js";
+import TokenRoutes from "./routes/_refreshToken.js";
 import userRoutes from "./routes/_users.js";
 import imgRoute from "./routes/_userPic.js"
 import cors from "cors"
@@ -23,8 +23,8 @@ app.use(cors("*"))
 //Routes
 app.get('/', (req, res) => res.send('Hello World!'));
 app.use("/api",authRoutes);
-app.use("/api/refresh",refreshTokenRoutes);
-app.use("/api/users",userRoutes);
+app.use("/api",TokenRoutes);
+app.use("/api",userRoutes);
 
 //Img upload
 app.use("/api/upload",imgRoute)

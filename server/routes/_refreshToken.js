@@ -7,7 +7,7 @@ import {refreshTokenValidation} from "../utils/validationSchema.js"
 const router = Router();
 
 //get new access token
-router.post("/", async(req, res) => {
+router.post("/refresh", async(req, res) => {
     const {error} = refreshTokenValidation(req.body);
     if(error) return res.status(400).send({error:true,msg:error.details[0].message});
     verifyRefreshToken(req.body.refreshToken)
@@ -32,7 +32,7 @@ router.post("/", async(req, res) => {
 })
 
 //logout
-router.delete("/", async(req, res) => {
+router.delete("/logout", async(req, res) => {
     try {
         const {error} = refreshTokenValidation(req.body);
         if(error) return res.status(400).send({error:true,msg:error.details[0].message});

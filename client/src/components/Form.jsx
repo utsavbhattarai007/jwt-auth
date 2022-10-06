@@ -9,13 +9,14 @@ import {
   FiUser,
   FiUpload,
 } from "react-icons/fi";
-import axios from "../../config/axios.js";
+import axios from "../config/axios.js";
 const Form = () => {
   const [eye, isEye] = useState(false);
   const [auth, isAuth] = useState("login");
   const [pic, setPic] = useState("");
   const [err, setErr] = useState("");
   const [msg, setMsg] = useState("");
+  const [picUrl,setPicUrl] = useState("");
   const [data, setData] = useState({
     username: "",
     email: "",
@@ -30,11 +31,13 @@ const Form = () => {
       password: "",
       createPassword: "",
     });
+    setPic("");
     isAuth(auth === "login" ? "register" : "login");
   };
   const picUpload = (e) => {
     const [file] = e.target.files;
     setPic(URL.createObjectURL(file));
+    getImgUrl(file);
   };
 
   const handleChange = (e) => {
@@ -82,11 +85,46 @@ const Form = () => {
       );
       if (res) {
         setMsg(res.data.msg);
-        //Token login pending
-        navigate("/app");
+        localStorage.setItem("access", res.data.accessToken);
+        localStorage.setItem("refresh", res.data.refreshToken);
+        setTimeout(() => {
+          navigate("/app",{replace:true});
+        }, 2000);
       }
     } catch (error) {
-      setErr(error.response.data.msg);
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
+        setErr(error.response.data.msg);
+      }
+    }
+  };
+
+  //Register
+  const register = async () => {
+    try {
+      if(data.password !== data.createPassword){
+        return setErr("Password doesn't match");
+      }
+      const res = await axios.post(
+        "/signup",
+        {
+          username: data.username,
+          email: data.email,
+          password: data.password,
+          profilePic: picUrl,
+        },
+        header
+      );
+      if (res) {
+        setMsg(res.data.msg);
+        setTimeout(() => {
+          swap();
+        }, 2000);
+      }
+    } catch (error) {
       if (
         error.response &&
         error.response.status >= 400 &&
@@ -98,55 +136,23 @@ const Form = () => {
   };
 
   //Upload image and get img url
-  // const getImgUrl = async () => {
-  //   alert("Check console");
-  //   const data = new FormData();
-  //   data.append("profile", pic, pic.name);
-  //   let img = data;
-  //   const res = await axios.post("/upload", img, {
-  //     headers: {
-  //       "Content-Type": "multipart/form-data",  
-  //     },
-  //   });
-  //   console.log(res);
-
-
-  // };
-
-  //Register
-  const register = async () => {
-    //registering user
-    try {
-      const res = await axios.post(
-        "/signup",
-        {
-          username: data.username,
-          email: data.email,
-          password: data.password,
-          profilePic: "empty",
-        },
-        header
-      );
-      if (res) {
-        setMsg(res.data.msg);
-        // navigate("/");
-      }
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status <= 500
-      ) {
-        setErr(error.response.data.msg);
-      }
-    }
+  const getImgUrl = async (file) => {
+    const formData = new FormData();
+    formData.append("profile", file);
+    const res = await axios.post("/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    const {msg,imgUrl} = res.data;
+    setPicUrl(imgUrl);
   };
 
   return (
     <>
       <div className={styles.form_container}>
         <div className={styles.form_wrapper}>
-          <div className={styles.header} onClick={() => getImgUrl()}>
+          <div className={styles.header}>
             <p>{auth === "login" ? "Login" : "Register"}</p>
           </div>
           <form onSubmit={onSubmit}>
