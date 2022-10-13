@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
         type: [String],
         enum:["user","admin","superadmin"],
         default:["user"]
+    },
+    verified:{
+        type:Boolean,
+        default:false
     }
 })
 

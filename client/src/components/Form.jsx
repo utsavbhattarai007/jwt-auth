@@ -87,9 +87,7 @@ const Form = () => {
         setMsg(res.data.msg);
         localStorage.setItem("access", res.data.accessToken);
         localStorage.setItem("refresh", res.data.refreshToken);
-        setTimeout(() => {
-          navigate("/app",{replace:true});
-        }, 2000);
+        window.location.href="/app";
       }
     } catch (error) {
       if (

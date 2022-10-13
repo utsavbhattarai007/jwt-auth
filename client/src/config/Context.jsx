@@ -49,7 +49,7 @@ const Context = ({ children }) => {
     if (localStorage.getItem("access") !== null) {
       fetchUser();
     }
-  }, []);
+  }, [user]);
 
   return (
     <>

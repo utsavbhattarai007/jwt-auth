@@ -28,6 +28,8 @@ app.use("/api",userRoutes);
 
 //Img upload
 app.use("/api/upload",imgRoute)
+
+//Serving the static files from the uploads folder. 
 app.use("/uploads", express.static("uploads"));
 
 //Listening on port

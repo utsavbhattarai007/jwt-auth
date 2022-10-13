@@ -1,20 +1,47 @@
-import React from 'react'
-import styles from "../css/Navbar.module.css"
+import React from "react";
+import { Link } from "react-router-dom";
+import styles from "../css/Navbar.module.css";
+import axios from "../config/axios.js";
 const Navbar = () => {
+  const logout = async () => {
+    try {
+      const res = await axios.post(
+        "/logout",
+        {
+          refreshToken: localStorage.getItem("refresh"),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (res) {
+        console.log(res.data.msg);
+        localStorage.removeItem("access");
+        localStorage.removeItem("refresh");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div className={styles.nav_con}>
         <div className={styles.left}>
-          <p>
-            Jwt-<span>Auth</span>
-          </p>
+          <Link to="/">
+            <p>
+              Jwt-<span>Auth</span>
+            </p>
+          </Link>
         </div>
         <div className={styles.right}>
-          <button>LogOut</button>
+          <button onClick={() => logout()}>LogOut</button>
         </div>
       </div>
     </>
   );
-}
+};
 
-export default Navbar
+export default Navbar;

@@ -4,11 +4,7 @@ import { ContextProvider } from "../config/Context";
 const Home = () => {
   const {usr} = useContext(ContextProvider);
   const [user,setUser] = usr;
-  const token = localStorage.getItem("access");
-  if(!token)
-  {
-    window.location.href = "/?auth";
-  }
+  
   return (
     <>
       <div className={styles.home_con}>

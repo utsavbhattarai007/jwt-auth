@@ -1,0 +1,29 @@
+.other_body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--home-bg);
+}
+.other_con{
+    background-color: var(--white);
+    padding: 30px 40px;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:20px
+}
+.icon1{
+    font-size: 50px;
+    color: #38E54D;
+}
+.icon2{
+    font-size: 50px;
+    color: #FF1E00;
+}
+.other_con p{
+    font-size: 22px;
+    color: rgb(147, 169, 146)
+}
