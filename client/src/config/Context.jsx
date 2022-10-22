@@ -19,7 +19,9 @@ const Context = ({ children }) => {
           return res.data.accessToken;
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
 

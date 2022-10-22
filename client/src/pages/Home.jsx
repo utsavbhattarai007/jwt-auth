@@ -1,10 +1,15 @@
 import React, { useContext } from "react";
 import styles from "../css/Home.module.css";
 import { ContextProvider } from "../config/Context";
+import { Navigate } from "react-router-dom";
 const Home = () => {
-  const {usr} = useContext(ContextProvider);
-  const [user,setUser] = usr;
+  const { usr } = useContext(ContextProvider);
+  const [user, setUser] = usr;
+  const token = localStorage.getItem("access");
   
+  if(!token){
+    return <Navigate to="/" replace/>
+  }
   return (
     <>
       <div className={styles.home_con}>

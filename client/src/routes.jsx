@@ -1,4 +1,4 @@
-import { Navigate, useRoutes } from "react-router-dom";
+import {useRoutes } from "react-router-dom";
 
 //Layouts
 import NavWithFooter from "./layout/NavWithFooter";
@@ -10,15 +10,14 @@ import Home from "./pages/Home";
 import NotFound  from "./pages/NotFound";
 
 export default function Router() {
-  const token = localStorage.getItem("access");
   return useRoutes([
     {
       path: "/",
-      element:token ? <Navigate replace to="/app"/> : <Auth/>,
+      element:<Auth/>,
     },
     {
       path: "/app",
-      element: token ? <NavWithFooter /> : <Navigate replace to="/" />,
+      element: <NavWithFooter />,
       children: [{ path: "", element: <Home /> }],
     },
     {
