@@ -6,7 +6,6 @@ export const ContextProvider = createContext();
 const Context = ({ children }) => {
   const [user, setUser] = useState(null);
 
-
   //getting access token through refresh token
   const getAccessToken = async () => {
     try {
@@ -23,7 +22,6 @@ const Context = ({ children }) => {
       console.log(error);
     }
   };
-
 
   //fetching data from access token
   const fetchUser = async () => {
@@ -55,9 +53,13 @@ const Context = ({ children }) => {
 
   return (
     <>
-      <ContextProvider.Provider value={{
-        usr:[user,setUser],
-      }}>{children}</ContextProvider.Provider>
+      <ContextProvider.Provider
+        value={{
+          usr: [user, setUser],
+        }}
+      >
+        {children}
+      </ContextProvider.Provider>
     </>
   );
 };
