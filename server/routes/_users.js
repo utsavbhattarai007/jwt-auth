@@ -30,6 +30,22 @@ router.get("/user", auth, async (req, res) => {
   }
 });
 
+//updating user data
+router.patch("/user", async (req, res) => {
+  try {
+    const { _id,username, profilePic } = req.body;
+    const user = await User.findOneAndUpdate(
+      { _id: _id },
+      { $set: { username: username, profilePic: profilePic } },
+      { new: true }
+    );
+    res.status(200).json({ error: false, user, msg: "User data updated" });
+    console.log(user);
+  } catch (error) {
+    res.status(500).json({ error: true, msg: "Internal server error" });
+  }
+});
+
 //verifing email route
 router.get("/user/:id/verify/:token", async (req, res) => {
   try {

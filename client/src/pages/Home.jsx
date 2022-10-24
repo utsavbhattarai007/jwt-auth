@@ -12,11 +12,22 @@ const Home = () => {
   const [swap,setSwap] = useState({
     profile:true,
     edit:false,
-    change:false
+    change:false,
+    loading:false
   })
 
   if (!token) {
     return <Navigate to="/" replace />;
+  }
+
+  if(swap.loading){
+    return (
+      <>
+        <div className={styles.home_con}>
+          <div className={styles.loader}></div>
+        </div>
+      </>
+    );
   }
   return (
     <>

@@ -45,7 +45,7 @@
   flex-direction: column;
   padding: 10px 12px;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 .img_wrapper {
   width: 95px;
@@ -77,8 +77,8 @@
 .btn {
   border: none;
   background-color: var(--primary);
-  padding: 8px 12px;
-  font-size: 0.9rem;
+  padding: 9px 12px;
+  font-size: 0.95rem;
   font-family: "Poppins";
   font-weight: 500;
   color: var(--white);
@@ -89,6 +89,67 @@
 .btn:hover {
   background-color: var(--light-primary);
 }
+
+/*Loading css*/
+.loader,
+.loader:before,
+.loader:after {
+  background: var(--primary);
+  -webkit-animation: load1 1s infinite ease-in-out;
+  animation: load1 1s infinite ease-in-out;
+  width: 0.8em;
+  height: 2em;
+  border-radius: 100vw;
+}
+.loader {
+  color: var(--primary);
+  position: relative;
+  font-size: 11px;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+.loader:before,
+.loader:after {
+  position: absolute;
+  top: 0;
+  content: '';
+}
+.loader:before {
+  left: -1.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+.loader:after {
+  left: 1.5em;
+}
+@-webkit-keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 2em;
+  }
+  40% {
+    box-shadow: 0 -2em;
+    height: 3em;
+  }
+}
+@keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 2em;
+  }
+  40% {
+    box-shadow: 0 -2em;
+    height: 3em;
+  }
+}
+
 
 /* media query for small device*/
 @media only screen and (max-width: 430px) {
