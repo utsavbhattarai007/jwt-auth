@@ -63,10 +63,9 @@ const Form = () => {
 
   //Auth submit
   const onSubmit = async (e) => {
+    e.preventDefault();
     setMsg("");
     setErr("");
-    e.preventDefault();
-    //Sending data to database
     {
       auth === "login" ? login() : register();
     }

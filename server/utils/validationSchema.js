@@ -26,4 +26,18 @@ const refreshTokenValidation = (body) => {
   return schema.validate(body);
 }
 
-export { signUpBodyValidation,loginBodyValidation,refreshTokenValidation };
+const passwordValidation = (body) => {
+  const schema = Joi.object({
+    _id:Joi.string().required().label("User Id"),
+    newPassword:passwordComplexity().required().label("New Password"),
+    oldPassword:passwordComplexity().required().label("Old Password")
+  })
+  return schema.validate(body);
+}
+
+export {
+  signUpBodyValidation,
+  loginBodyValidation,
+  refreshTokenValidation,
+  passwordValidation,
+};

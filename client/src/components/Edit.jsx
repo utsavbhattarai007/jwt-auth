@@ -4,6 +4,7 @@ import styles from "../css/Edit.module.css";
 import Input from "./Input";
 import { FiUpload } from "react-icons/fi";
 import axios from "../config/axios";
+import toast from "react-hot-toast";
 
 const Edit = ({ user, state }) => {
   const [swap, setSwap] = state;
@@ -26,7 +27,7 @@ const Edit = ({ user, state }) => {
       const res = await axios.patch(
         "/user",
         {
-          _id:user._id,
+          _id: user._id,
           username: data.username,
           profilePic: data.profilePic,
         },
@@ -36,9 +37,20 @@ const Edit = ({ user, state }) => {
           },
         }
       );
-      setSwap({ ...swap, loading: false, profile: !profile, edit: !edit });
+      if (res) {
+        toast.success(res.data.msg);
+        setSwap({ ...swap, loading: false, profile: !profile, edit: !edit });
+        window.location.reload();
+      }
     } catch (error) {
-      console.log(error);
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
+        toast.error(error.response.data.msg);
+      }
+      toast("Something went wrong");
     }
   };
 
